@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerAction : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerAction : MonoBehaviour
 
     Rigidbody2D rigidBody;
     SpriteRenderer spriteRenderer;
+    Animator animator;
 
     bool estaNoChao = false;
 
@@ -19,6 +21,7 @@ public class PlayerAction : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -36,9 +39,18 @@ public class PlayerAction : MonoBehaviour
             spriteRenderer.flipX = true;
         }
 
-        Debug.Log("estaNoChao: " + estaNoChao);
-
-        if (Input.GetAxis("Vertical") > 0 && estaNoChao)
+        if (Input.GetKey(KeyCode.UpArrow) && estaNoChao)
             rigidBody.AddForce(Vector2.up * alturaPulo);
+
+        animator.SetBool("running", Input.GetAxis("Horizontal") != 0);
+        animator.SetBool("jumping", !estaNoChao);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "death")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        }
     }
 }
