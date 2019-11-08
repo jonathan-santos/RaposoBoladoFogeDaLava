@@ -52,5 +52,9 @@ public class PlayerAction : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
         }
+        else if (collision.gameObject.tag == "house")
+        {
+            Debug.Log("Você venceu!");
+        }
     }
 }
