@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerAction : MonoBehaviour
 {
+    [Header("Movimentação")]
     public float velocidade = 10;
     public float alturaPulo = 20;
 
+    [Header("Importação")]
     public GameObject checarChao;
     public LayerMask layerChao;
 
@@ -28,12 +28,12 @@ public class PlayerAction : MonoBehaviour
     {
         estaNoChao = Physics2D.OverlapPoint(checarChao.transform.position, layerChao);
 
-        if (Input.GetAxis("Horizontal") > 0)
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.Translate(Vector2.right * Time.deltaTime * velocidade);
             spriteRenderer.flipX = false;
         }
-        else if (Input.GetAxis("Horizontal") < 0)
+        else if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Translate(Vector2.left * Time.deltaTime * velocidade);
             spriteRenderer.flipX = true;
